@@ -1,0 +1,11 @@
+
+# IntelliJ Files
+/*.iml
+/dependency-reduced-pom.xml
+
+/.idea/
+/target/
+/out/
+
+# Custom
+/libs/*.jar

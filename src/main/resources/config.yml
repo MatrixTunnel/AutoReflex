@@ -1,0 +1,71 @@
+
+#
+# AutoReflex - Made by MatrixTunnel (Discord: MatrixTunnel#0001)
+#   *Reflex just got more automatic*
+#
+# Spigot Post: https://something.here/when/released
+# GitHub (Issues/Feature Requests): https://github.com/MatrixTunnel/AutoReflex/
+#
+settings:
+
+  # Should the plugin user Paper (PaperSpigot) optimizations?
+  paper_optimizations: false
+
+  # Minimum kicks before the players are flagged for hacks. Default: 3
+  min_kick_points: 3
+
+  # Time in ticks before kick points are cleared. Default: 8400 = 7 minutes
+  reset_data_interval: 8400
+
+  # Time in ticks when the reset task is ran
+  reset_data_task_interval: 20
+
+  # Triggers the 'ReflexAutoBanEvent' when players are flagged for hacks
+  enable_autoban_event: true
+
+# This section executes commands based on the cheat that was detected
+#
+# Commands can be the same as in the reflex config
+# NOTE: Use the reflex delay command set to 0 with the placeholder if the command doesn't work correctly
+#
+commands:
+
+  # Toggle different command groups
+  enable_trigger_commands: true
+  enable_global_before_commands: true
+  enable_global_after_commands: true
+  enable_cheat_commands: true
+
+  # Executed when the 'autoreflex trigger' command is used
+  trigger:
+    - "autoreflex softreset %player%"
+    - "reflex notify &d%player% might be hacking &7[%kick-points%/%max-kick-points% | %clean-id%]"
+
+  # Executed before cheat commands regardless of cheat type
+  global_before:
+    - "reflex notify &dBanning player %player%"
+    - "execute %player% ~ ~ ~ summon area_effect_cloud ~ ~0.25 ~ {CustomName:\"&6%player% &cwas removed\",CustomNameVisible:true,CustomNameVisible:1b,Particle:\"take\",Radius:0f,Duration:140}"
+    - "execute %player% ~ ~ ~ summon area_effect_cloud ~ ~ ~ {CustomName:\"&cfrom the game for hacking\",CustomNameVisible:1b,Particle:\"take\",Radius:0f,Duration:140}"
+    - "execute %player% ~ ~ ~ summon lightning_bolt ~ ~425 ~"
+    - "execute %player% ~ ~ ~ particle flame ~ ~ ~ 0 0 0 0.06 40 force"
+    - "autoreflex reset %player%"
+
+  # Executed after cheat commands regardless of cheat type
+  global_after:
+    - "reflex notify &dAuto banned %player% for hacks &7(%cheat%#%clean-id%)"
+
+  # Commands executed for the cheat type they were caught for
+  #
+  # Available:
+  #   InvActions
+  #   Criticals
+  #   AntiKnockback
+  #   KillAura
+  #   ClientControl
+  #   BadPackets
+  #   Speed
+  killaura:
+    - "reflex ban %player% 2h KillAura"
+
+  badpackets:
+    - "reflex ban %player% 1h BadPackets"

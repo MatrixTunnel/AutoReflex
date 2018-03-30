@@ -1,0 +1,8 @@
+name: AutoReflex
+version: ${project.version}
+author: MatrixTunnel
+website: https://matrixtunnel.me
+description: Reflex add-on to automagically deal with punishments
+
+main: me.matrixtunnel.autoreflex.AutoReflex
+depend: [Reflex]
